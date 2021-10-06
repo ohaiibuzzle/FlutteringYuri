@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.buzzle.yuri_app">
+    package="com.buzzle.flutter_yuri">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="FlutteringYuri"
