@@ -51,6 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget buildSettings(BuildContext context) {
     return SettingsList(
       sections: [
+        CustomSection(child: const SizedBox(height: 10)),
         SettingsSection(title: 'Subreddit Options', tiles: [
           SettingsTile(
             title: 'Subreddit',

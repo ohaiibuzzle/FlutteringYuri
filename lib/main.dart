@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
         });
 
     return MaterialApp(
-        title: "Welcome Home",
+        title: "Fluttering Yuri",
         theme: ThemeData(),
         darkTheme: ThemeData(
           brightness: Brightness.dark,
