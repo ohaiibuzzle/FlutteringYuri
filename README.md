@@ -4,5 +4,5 @@
 
 ## Getting Started
 
-`flutter run --release` with your phone plugged in
-Or however you prefer.
+- `flutter run --release` with your phone plugged in
+- Or however you prefer.
