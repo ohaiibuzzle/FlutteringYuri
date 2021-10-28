@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:yuri_app/post_imgview.dart';
 import 'package:yuri_app/settings_page.dart';
+import 'package:html_unescape/html_unescape.dart';
 
 class RedditPost {
   final String postUrl;
-  final String postName;
+  late final String postName;
   final String imageUrl;
   final String user;
   final String thumbnailUrl;
@@ -16,8 +17,11 @@ class RedditPost {
   final bool isNsfw;
 
   RedditPost(
-      this.postUrl, this.postName, this.imageUrl, this.user, this.thumbnailUrl,
-      [this.ups = 0, this.isNsfw = false]);
+      this.postUrl, postName, this.imageUrl, this.user, this.thumbnailUrl,
+      [this.ups = 0, this.isNsfw = false]) {
+    var unescaper = HtmlUnescape();
+    this.postName = unescaper.convert(postName);
+  }
 
   @override
   String toString() {
