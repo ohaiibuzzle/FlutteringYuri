@@ -32,7 +32,7 @@ class PostImageViewer extends StatelessWidget {
       body: Stack(children: <Widget>[
         GestureDetector(
           child: PhotoViewGallery.builder(
-            scrollPhysics: const BouncingScrollPhysics(),
+            scrollPhysics: const ClampingScrollPhysics(),
             builder: (BuildContext context, int index) {
               return PhotoViewGalleryPageOptions(
                   imageProvider: Image.network(args.imageUrl[index]).image,
