@@ -33,13 +33,15 @@ class RedditPostDisplay extends StatelessWidget {
   const RedditPostDisplay({
     Key? key,
     required this.post,
+    required this.fullRes,
   }) : super(key: key);
 
   final RedditPost post;
+  final bool fullRes;
 
   @override
   Widget build(BuildContext context) {
-    String thumbnailUri = post.imageUrl[0];
+    String thumbnailUri = fullRes ? post.imageUrl[0] : post.thumbnailUrl;
     String postTitle = post.postName;
     String user = post.user;
     String postUrl = post.postUrl;
@@ -221,6 +223,7 @@ class _RedditFeedState extends State<RedditFeed> {
   Widget _buildRow(RedditPost post) {
     return RedditPostDisplay(
       post: post,
+      fullRes: widget.settings.loadFullRes,
     );
   }
 

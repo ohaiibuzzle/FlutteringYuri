@@ -32,8 +32,10 @@ class _MyAppState extends State<MyApp> {
 
   Future<SettingsArguments> getSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    return SettingsArguments((prefs.getString("subreddit") ?? "WholesomeYuri"),
-        (prefs.getBool("allowNSFW") ?? false));
+    return SettingsArguments(
+        (prefs.getString("subreddit") ?? "WholesomeYuri"),
+        (prefs.getBool("allowNSFW") ?? false),
+        (prefs.getBool("loadFullRes") ?? true));
   }
 
   Future<Image> getSubredditHeading() async {

@@ -5,8 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsArguments {
   String subreddit;
   bool allowNSFW;
+  bool loadFullRes;
 
-  SettingsArguments(this.subreddit, this.allowNSFW);
+  SettingsArguments(this.subreddit, this.allowNSFW, this.loadFullRes);
 
   @override
   String toString() {
@@ -26,6 +27,7 @@ Future<void> _saveSettings(SettingsArguments args) async {
   final _prefs = await SharedPreferences.getInstance();
   _prefs.setString("subreddit", args.subreddit);
   _prefs.setBool("allowNSFW", args.allowNSFW);
+  _prefs.setBool("loadFullRes", args.loadFullRes);
 }
 
 class _SettingsPageState extends State<SettingsPage> {
@@ -94,7 +96,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 args.allowNSFW = newValue;
                 setState(() {});
               },
-              switchValue: args.allowNSFW)
+              switchValue: args.allowNSFW),
+          SettingsTile.switchTile(
+              title: "Load full resolution images in browser",
+              onToggle: (bool newValue) {
+                args.loadFullRes = newValue;
+                setState(() {});
+              },
+              switchValue: args.loadFullRes)
         ])
       ],
     );
