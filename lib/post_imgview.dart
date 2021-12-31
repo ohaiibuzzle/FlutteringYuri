@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuri_app/reddit_feed.dart';
@@ -30,11 +31,27 @@ class PostImageViewer extends StatelessWidget {
       ),
       body: Stack(children: <Widget>[
         GestureDetector(
-          child: PhotoView(
-            imageProvider: Image.network(args.imageUrl[0]).image,
-            minScale: PhotoViewComputedScale.contained * 0.8,
-            maxScale: PhotoViewComputedScale.covered * 3.0,
-            initialScale: PhotoViewComputedScale.contained,
+          child: PhotoViewGallery.builder(
+            scrollPhysics: const BouncingScrollPhysics(),
+            builder: (BuildContext context, int index) {
+              return PhotoViewGalleryPageOptions(
+                  imageProvider: Image.network(args.imageUrl[index]).image,
+                  minScale: PhotoViewComputedScale.contained * 0.8,
+                  maxScale: PhotoViewComputedScale.covered * 3.0,
+                  initialScale: PhotoViewComputedScale.contained);
+            },
+            itemCount: args.imageUrl.length,
+            loadingBuilder: (context, event) => Center(
+              child: SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: CircularProgressIndicator(
+                  value: event == null
+                      ? 0
+                      : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                ),
+              ),
+            ),
           ),
         ),
         Container(
