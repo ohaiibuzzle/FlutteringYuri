@@ -31,7 +31,7 @@ class PostImageViewer extends StatelessWidget {
       body: Stack(children: <Widget>[
         GestureDetector(
           child: PhotoView(
-            imageProvider: Image.network(args.imageUrl).image,
+            imageProvider: Image.network(args.imageUrl[0]).image,
             minScale: PhotoViewComputedScale.contained * 0.8,
             maxScale: PhotoViewComputedScale.covered * 3.0,
             initialScale: PhotoViewComputedScale.contained,

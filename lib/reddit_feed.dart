@@ -10,7 +10,7 @@ import 'package:html_unescape/html_unescape.dart';
 class RedditPost {
   final String postUrl;
   late final String postName;
-  final String imageUrl;
+  final List<String> imageUrl;
   final String user;
   final String thumbnailUrl;
   final int ups;
@@ -39,7 +39,7 @@ class RedditPostDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String thumbnailUri = post.imageUrl;
+    String thumbnailUri = post.imageUrl[0];
     String postTitle = post.postName;
     String user = post.user;
     String postUrl = post.postUrl;
@@ -157,18 +157,35 @@ class _RedditFeedState extends State<RedditFeed> {
     var postData = jsonDecode(response.body)['data']['children'];
     for (final item in postData) {
       if (!item['data']['url'].endsWith(".png") &
-          !item['data']['url'].endsWith(".jpg")) continue;
+          !item['data']['url'].endsWith(".jpg") &
+          !(item['data']['url'].contains("gallery"))) continue;
       if (!allowNSFW && item['data']['over_18']) continue;
-      var thisPost = RedditPost(
-          "https://reddit.com" + item['data']['permalink'],
-          item['data']['title'],
-          item['data']['url'],
-          item['data']['author'],
-          item['data']['thumbnail'],
-          item['data']['ups'],
-          item['data']['over_18']);
-
-      _toReturn.add(thisPost);
+      if (item['data']['url'].endsWith(".jpg") ||
+          item['data']['url'].endsWith(".png")) {
+        _toReturn.add(RedditPost(
+            item['data']['permalink'],
+            item['data']['title'],
+            [item['data']['url']],
+            item['data']['author'],
+            item['data']['thumbnail'],
+            item['data']['ups'],
+            item['data']['over_18']));
+      } else if (item['data']['url'].contains("gallery")) {
+        var itemids = item['data']['gallery_data']['items'];
+        List<String> imageitems = [];
+        for (final itemid in itemids) {
+          imageitems.add(
+              "https://i.redd.it/${(item['data']['media_metadata'][itemid['media_id']]['id'])}.${(item['data']['media_metadata'][itemid['media_id']]['m'].toString().split("/")[1])}");
+        }
+        _toReturn.add(RedditPost(
+            item['data']['permalink'],
+            item['data']['title'],
+            imageitems,
+            item['data']['author'],
+            item['data']['thumbnail'],
+            item['data']['ups'],
+            item['data']['over_18']));
+      }
       lastPost = item['data']['name'];
     }
     _pagingController.appendPage(_toReturn, lastPost);
