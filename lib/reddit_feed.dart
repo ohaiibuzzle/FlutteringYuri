@@ -178,7 +178,7 @@ class _RedditFeedState extends State<RedditFeed> {
       if (item['data']['url'].endsWith(".jpg") ||
           item['data']['url'].endsWith(".png")) {
         _toReturn.add(RedditPost(
-            item['data']['permalink'],
+            "https://reddit.com" + item['data']['permalink'],
             item['data']['title'],
             [item['data']['url']],
             item['data']['author'],
@@ -207,7 +207,7 @@ class _RedditFeedState extends State<RedditFeed> {
         }
 
         _toReturn.add(RedditPost(
-            item['data']['permalink'],
+            "https://reddit.com" + item['data']['permalink'],
             item['data']['title'],
             imageitems,
             item['data']['author'],
