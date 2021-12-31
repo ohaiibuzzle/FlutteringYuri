@@ -115,6 +115,19 @@ class RedditPostDisplay extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 10.0)));
                           }
+                        }(),
+                        const SizedBox(height: 3),
+                        () {
+                          if (post.imageUrl.length > 1) {
+                            return ColoredBox(
+                                color: Colors.orange,
+                                child: Text(
+                                    "Gallery: ${post.imageUrl.length} images",
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 10.0)));
+                          } else {
+                            return const SizedBox();
+                          }
                         }()
                       ],
                     )))
@@ -171,12 +184,26 @@ class _RedditFeedState extends State<RedditFeed> {
             item['data']['ups'],
             item['data']['over_18']));
       } else if (item['data']['url'].contains("gallery")) {
-        var itemids = item['data']['gallery_data']['items'];
+        var itemids = item['data']['gallery_data']?['items'];
         List<String> imageitems = [];
-        for (final itemid in itemids) {
-          imageitems.add(
-              "https://i.redd.it/${(item['data']['media_metadata'][itemid['media_id']]['id'])}.${(item['data']['media_metadata'][itemid['media_id']]['m'].toString().split("/")[1])}");
+        if (itemids == null) {
+          if (item['data']['crosspost_parent_list'] != null) {
+            itemids = item['data']['crosspost_parent_list'][0]['gallery_data']
+                ?['items'];
+            for (final itemid in itemids) {
+              imageitems.add(
+                  "https://i.redd.it/${(item['data']['crosspost_parent_list'][0]['media_metadata'][itemid['media_id']]['id'])}.${(item['data']['crosspost_parent_list'][0]['media_metadata'][itemid['media_id']]['m'].toString().split("/")[1])}");
+            }
+          } else {
+            continue;
+          }
+        } else {
+          for (final itemid in itemids) {
+            imageitems.add(
+                "https://i.redd.it/${(item['data']['media_metadata'][itemid['media_id']]['id'])}.${(item['data']['media_metadata'][itemid['media_id']]['m'].toString().split("/")[1])}");
+          }
         }
+
         _toReturn.add(RedditPost(
             item['data']['permalink'],
             item['data']['title'],
