@@ -48,7 +48,7 @@ class RedditPostDisplay extends StatelessWidget {
     int ups = post.ups;
     bool nsfw = post.isNsfw;
     if (postTitle.length > 100) {
-      postTitle = postTitle.substring(0, 100) + '...';
+      postTitle = '${postTitle.substring(0, 100)}...';
     }
 
     return GestureDetector(
@@ -57,14 +57,13 @@ class RedditPostDisplay extends StatelessWidget {
             .pushNamed(PostImageViewer.routeName, arguments: post)
       },
       onLongPress: () => {
-        Clipboard.setData(ClipboardData(text: postUrl)).whenComplete(() => {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        Clipboard.setData(ClipboardData(text: postUrl)).whenComplete(() => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text("Copied URL to clipboard",
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.primary)),
                 backgroundColor: Theme.of(context).colorScheme.background,
               ))
-            })
+            )
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -164,7 +163,7 @@ class _RedditFeedState extends State<RedditFeed> {
 
   Future<void> getPostFeed(
       String subreddit, bool allowNSFW, String lastPost) async {
-    var _toReturn = <RedditPost>[];
+    var toReturn = <RedditPost>[];
     var url =
         Uri.parse("https://www.reddit.com/r/$subreddit.json?after=$lastPost");
     var response = await http.get(url);
@@ -177,7 +176,7 @@ class _RedditFeedState extends State<RedditFeed> {
       if (!allowNSFW && item['data']['over_18']) continue;
       if (item['data']['url'].endsWith(".jpg") ||
           item['data']['url'].endsWith(".png")) {
-        _toReturn.add(RedditPost(
+        toReturn.add(RedditPost(
             "https://reddit.com" + item['data']['permalink'],
             item['data']['title'],
             [item['data']['url']],
@@ -206,7 +205,7 @@ class _RedditFeedState extends State<RedditFeed> {
           }
         }
 
-        _toReturn.add(RedditPost(
+        toReturn.add(RedditPost(
             "https://reddit.com" + item['data']['permalink'],
             item['data']['title'],
             imageitems,
@@ -217,7 +216,7 @@ class _RedditFeedState extends State<RedditFeed> {
       }
       lastPost = item['data']['name'];
     }
-    _pagingController.appendPage(_toReturn, lastPost);
+    _pagingController.appendPage(toReturn, lastPost);
   }
 
   Widget _buildRow(RedditPost post) {

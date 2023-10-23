@@ -1,4 +1,4 @@
-package com.buzzle.flutter_yuri
+package dev.ohaiibuzzle.flutter_yuri
 
 import io.flutter.embedding.android.FlutterActivity
 

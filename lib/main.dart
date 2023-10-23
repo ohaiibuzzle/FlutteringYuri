@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
         });
 
     var defaultHeader = DrawerHeader(
-        decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
         child: const Text("The WholesomeYuri thing"));
 
     var subredditHeader = FutureBuilder(
@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
               } else {
                 return DrawerHeader(
                   decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                       image: DecorationImage(
                           image: snapshot.data!.image,
                           fit: BoxFit.cover,
@@ -116,12 +116,12 @@ class _MyAppState extends State<MyApp> {
             case ConnectionState.none:
               return DrawerHeader(
                   decoration:
-                      BoxDecoration(color: Theme.of(context).backgroundColor),
+                      BoxDecoration(color: Theme.of(context).colorScheme.background),
                   child: const Text("The WholesomeYuri thing"));
             case ConnectionState.active:
               return DrawerHeader(
                   decoration:
-                      BoxDecoration(color: Theme.of(context).backgroundColor),
+                      BoxDecoration(color: Theme.of(context).colorScheme.background),
                   child: const Text("The WholesomeYuri thing"));
           }
         });

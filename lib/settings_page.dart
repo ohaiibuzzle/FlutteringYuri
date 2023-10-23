@@ -24,10 +24,10 @@ class SettingsPage extends StatefulWidget {
 }
 
 Future<void> _saveSettings(SettingsArguments args) async {
-  final _prefs = await SharedPreferences.getInstance();
-  _prefs.setString("subreddit", args.subreddit);
-  _prefs.setBool("allowNSFW", args.allowNSFW);
-  _prefs.setBool("loadFullRes", args.loadFullRes);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString("subreddit", args.subreddit);
+  prefs.setBool("allowNSFW", args.allowNSFW);
+  prefs.setBool("loadFullRes", args.loadFullRes);
 }
 
 class _SettingsPageState extends State<SettingsPage> {
