@@ -57,14 +57,13 @@ class RedditPostDisplay extends StatelessWidget {
             .pushNamed(PostImageViewer.routeName, arguments: post)
       },
       onLongPress: () => {
-        Clipboard.setData(ClipboardData(text: postUrl)).whenComplete(() => {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("Copied URL to clipboard",
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary)),
-                backgroundColor: Theme.of(context).colorScheme.background,
-              ))
-            })
+        Clipboard.setData(ClipboardData(text: postUrl)).whenComplete(() =>
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Copied URL to clipboard",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary)),
+              backgroundColor: Theme.of(context).colorScheme.background,
+            )))
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0),

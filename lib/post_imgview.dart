@@ -85,18 +85,18 @@ class PostImageViewer extends StatelessWidget {
   }
 
   void _copyToClipboard(BuildContext context, String text) {
-    Clipboard.setData(ClipboardData(text: text)).whenComplete(() => {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Copied URL to clipboard",
-                style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-            backgroundColor: Theme.of(context).colorScheme.background,
-          ))
-        });
+    Clipboard.setData(ClipboardData(text: text))
+        .whenComplete(() => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Copied URL to clipboard",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary)),
+              backgroundColor: Theme.of(context).colorScheme.background,
+            )));
   }
 
   void _launchUrl(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.tryParse(url)!)) {
+      await launchUrl(Uri.tryParse(url)!);
     } else {
       throw 'Could not launch $url';
     }
